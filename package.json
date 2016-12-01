@@ -1,0 +1,26 @@
+{
+  "name": "terredux",
+  "version": "0.1.0",
+  "description": "experimental implementation of [redux](https://github.com/reactjs/redux).",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skyuplam/terredux.git"
+  },
+  "keywords": [
+    "redux",
+    "reducer",
+    "state",
+    "functional",
+    "javascript"
+  ],
+  "author": "Terrence Lam <skyuplam@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/skyuplam/terredux/issues"
+  },
+  "homepage": "https://github.com/skyuplam/terredux#readme"
+}
