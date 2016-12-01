@@ -9,7 +9,7 @@
     "build:es": "cross-env BABEL_ENV=es babel src --out-dir es",
     "build": "npm run build:es",
     "build:umd": "cross-env BABEL_ENV=commonjs NODE_ENV=development webpack src/index.js dist/terredux.js",
-    "clean": "rimraf lib es coverage",
+    "clean": "rimraf lib dist es coverage",
     "test": "npm test"
   },
   "repository": {
