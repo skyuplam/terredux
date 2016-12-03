@@ -1,1 +1,5 @@
-import _ from 'lodash';
+import { compose  } from './compose';
+
+export {
+    compose,
+};
