@@ -3,9 +3,13 @@ import {
   filter,
 } from 'lodash';
 
-const createStore = (reducer, preloadedState) => {
+const createStore = (reducer, preloadedState, enhancer) => {
   let state = preloadedState;  // keep the state
   let listeners = [];  // keep track of the listeners
+
+  if (typeof enhancer !== 'undefined') {
+    return enhancer(createStore)(reducer, preloadedState);
+  }
 
   // get the current state
   const getState = () => state;
@@ -27,9 +31,9 @@ const createStore = (reducer, preloadedState) => {
   dispatch({});  // initial state population
 
   return {
-    getState,
     dispatch,
     subscribe,
+    getState,
   };
 };
 

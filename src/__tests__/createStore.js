@@ -1,6 +1,7 @@
 import createStore from '../createStore';
 import {
   keys,
+  assign,
 } from 'lodash';
 
 const ADD_TODO = 'tests/createStore/ADD_TODO';
@@ -93,5 +94,29 @@ describe('createStore', () => {
 
     store.dispatch(unknownAction());
     expect(listener.mock.calls.length).toBe(0);
+  });
+
+  it('should accept enhancer as the third argument', () => {
+    const emptyArray = [];
+    const spyEnhancer = simpleCreateStore => (...arg) => {
+      expect(arg[0]).toBe(reducer);
+      expect(arg[1]).toBe(emptyArray);
+      expect(arg.length).toBe(2);
+      const simpleStore = simpleCreateStore(...arg);
+
+      return assign({}, simpleStore, {
+        dispatch: jest.fn(simpleStore.dispatch),
+      });
+    }
+
+    const store = createStore(reducer, emptyArray, spyEnhancer);
+    const todo1 = { id: 1, text: 'hello'  };
+    const action = addTodo(todo1);
+    store.dispatch(action);
+
+    expect(store.dispatch).toBeCalledWith(action);
+    expect(store.getState()).toEqual([
+      todo1,
+    ]);
   });
 });

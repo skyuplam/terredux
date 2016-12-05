@@ -1,24 +1,20 @@
 import compose from './compose';
-import {
-  assign,
-} from 'lodash';
 
-function applyMiddleware(...middlewares) {
-  return (createStore) => (reducer, preloadedState) => {
-    const store = createStore(reducer, preloadedState);
+export default function applyMiddleware(...middlewares) {
+  return (createStore) => (reducer, preloadedState, enhancer) => {
+    const store = createStore(reducer, preloadedState, enhancer);
     let dispatch = store.dispatch;
 
-    const chain = middlewares.map((middleware) =>
-      middleware({
-        getState: store.getState,
-        dispatch: (action) => dispatch(action),
-      })
-    );
+    const middlewareAPI = {
+      getState: store.getState,
+      dispatch: (action) => dispatch(action)
+    };
+    const chain = middlewares.map(middleware => middleware(middlewareAPI));
+    dispatch = compose(...chain)(store.dispatch);
 
-    dispatch = compose(chain)(store.dispatch);
-
-    return assign({}, store, dispatch);
-  };
+    return {
+      ...store,
+      dispatch
+    }
+  }
 }
-
-export default applyMiddleware;

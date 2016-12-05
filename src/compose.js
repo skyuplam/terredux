@@ -7,8 +7,7 @@ import {
   last,
 } from 'lodash';
 
-function compose(middlewares) {
-  if (!isArray(middlewares)) throw new TypeError('middlewares must be an array!');
+function compose(...middlewares) {
   each(middlewares, (middleware) => {
     if (!isFunction(middleware)) throw new TypeError("middlewares must be composed of functions!");
   });
